@@ -168,46 +168,13 @@
             background: rgba(255,255,255,0.3);
         }
 
-        /* EMPLOYEE INFO DISPLAY - Only for employees */
-        .employee-info-section {
-            margin-bottom: 25px;
-        }
-
-        .info-card {
-            background: #e8f5e8;
-            border-radius: 15px;
-            padding: 20px;
-            border: 2px solid #28a745;
-            margin-bottom: 15px;
-        }
-
-        .info-card label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 700;
-            color: #155724;
-            font-size: 16px;
-        }
-
-        .info-value {
-            background: white;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #333;
-            border: 2px solid #28a745;
-            text-align: center;
-        }
-
-        /* STORE SELECTION - For managers/owners only */
+        /* STORE SELECTION */
         .store-select {
             margin-bottom: 25px;
             background: #fff3cd;
             border-radius: 15px;
             padding: 20px;
             border: 2px solid #ffc107;
-            display: none; /* Hidden by default, shown for managers */
         }
 
         .store-select label {
@@ -237,10 +204,9 @@
             box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
         }
 
-        /* EMPLOYEE SELECTION - For managers/owners only */
+        /* EMPLOYEE SELECTION */
         .employee-select {
             margin-bottom: 25px;
-            display: none; /* Hidden by default, shown for managers */
         }
 
         .employee-select label {
@@ -421,13 +387,6 @@
             display: block;
         }
 
-        .status-message.warning {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffc107;
-            display: block;
-        }
-
         /* DASHBOARD SECTION */
         .dashboard-section {
             margin-top: 30px;
@@ -597,17 +556,6 @@
             margin-bottom: 15px;
         }
 
-        .powered-by {
-            text-align: center;
-            margin-top: 20px;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
         @media (max-width: 480px) {
             .container {
                 margin: 5px;
@@ -625,36 +573,6 @@
 
             .company-name {
                 font-size: 24px;
-            }
-        }
-
-        /* Notification styles */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #ff6b6b;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            z-index: 1000;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        .notification.warning {
-            background: #ffc107;
-            color: #856404;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
             }
         }
     </style>
@@ -688,16 +606,16 @@
                 
                 <div class="status-message" id="loginStatusMessage"></div>
                 
-                <div class="powered-by">
-                    Powered by WAQAS
+                <div style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
+                    Contact management for login credentials<br>
+                    <small>Demo: manager/manager123 or owner/owner123</small>
                 </div>
             </div>
 
             <div class="app-container" id="appContainer">
-                <!-- Store Selection - Only for Managers/Owners -->
-                <div class="store-select" id="storeSelectContainer">
-                    <label for="storeSelect">Select Store Location:</label>
-                    <select id="storeSelect" onchange="onStoreChange()">
+                <div class="store-select">
+                    <label for="storeSelect">📍 Select Store Location:</label>
+                    <select id="storeSelect">
                         <option value="">-- Choose Store --</option>
                         <option value="BackWerk Frankenthal">BackWerk Frankenthal</option>
                         <option value="BackWerk Offenburg">BackWerk Offenburg</option>
@@ -706,19 +624,6 @@
                     </select>
                 </div>
 
-                <!-- Employee Information Display - Only for Employees -->
-                <div class="employee-info-section" id="employeeInfoSection" style="display: none;">
-                    <div class="info-card">
-                        <label>Your Store Location:</label>
-                        <div class="info-value" id="employeeStoreDisplay">Loading...</div>
-                    </div>
-                    <div class="info-card">
-                        <label>Employee Name:</label>
-                        <div class="info-value" id="employeeNameDisplay">Loading...</div>
-                    </div>
-                </div>
-
-                <!-- Admin Controls - Only for Managers/Owners -->
                 <div class="admin-controls" id="adminControls" style="display: none;">
                     <div class="admin-badge">Manager Access</div>
                     <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
@@ -727,18 +632,17 @@
                     </label>
                 </div>
 
-                <!-- Employee Selection - Only for Managers/Owners in admin mode -->
-                <div class="employee-select" id="employeeSelectContainer">
-                    <label for="employee">Select Employee:</label>
-                    <select id="employee" onchange="onEmployeeChange()">
+                <div class="employee-select">
+                    <label for="employee">👤 Select Employee:</label>
+                    <select id="employee">
                         <option value="">-- Select Store First --</option>
                     </select>
                 </div>
 
                 <div class="time-input-section">
                     <div class="date-input-group">
-                        <label for="dateInput">Select Date</label>
-                        <input type="date" id="dateInput" class="time-input" onchange="validateForm()" />
+                        <label for="dateInput">📅 Select Date</label>
+                        <input type="date" id="dateInput" class="time-input" />
                     </div>
 
                     <div class="current-time">
@@ -748,13 +652,13 @@
 
                     <div class="time-inputs">
                         <div class="time-input-group">
-                            <label for="startTime">Start Time</label>
-                            <input type="time" id="startTime" class="time-input" onchange="validateForm()" />
+                            <label for="startTime">🕐 Start Time</label>
+                            <input type="time" id="startTime" class="time-input" />
                             <button class="quick-time-btn" onclick="setCurrentTime('startTime')">Now</button>
                         </div>
                         <div class="time-input-group">
-                            <label for="endTime">End Time</label>
-                            <input type="time" id="endTime" class="time-input" onchange="validateForm()" />
+                            <label for="endTime">🕕 End Time</label>
+                            <input type="time" id="endTime" class="time-input" />
                             <button class="quick-time-btn" onclick="setCurrentTime('endTime')">Now</button>
                         </div>
                     </div>
@@ -766,9 +670,9 @@
                 
                 <div class="status-message" id="statusMessage"></div>
 
-                <div class="dashboard-section" id="managerDashboard" style="display: none;">
+                <div class="dashboard-section">
                     <div class="dashboard-header">
-                        <h3>Manager Tools</h3>
+                        <h3>🚀 Quick Actions</h3>
                         <div>
                             <button class="btn-small dashboard" onclick="openMasterSheet()">Master Dashboard</button>
                             <button class="btn-small dashboard" onclick="downloadStoreReport()">Store Report</button>
@@ -778,14 +682,14 @@
 
                 <div class="records-section">
                     <div class="records-header">
-                        <h3>Your Work Records</h3>
+                        <h3>📋 Recent Work Records</h3>
                         <div>
                             <button class="btn-small" onclick="refreshRecords()">Refresh</button>
                             <button class="clear-btn" onclick="clearLocalRecords()">Clear Local</button>
                         </div>
                     </div>
                     <div id="recordsList">
-                        <div class="no-records">Login to view your records</div>
+                        <div class="no-records">Select store and employee to view records</div>
                     </div>
                 </div>
 
@@ -793,83 +697,64 @@
                     <h3>This Month Total</h3>
                     <div class="total-hours" id="totalHours">0.0 hours</div>
                 </div>
-
-                <div class="powered-by">
-                    Powered by WAQAS
-                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Configuration
-        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw1UGRtmH9visVGVgIyjbk4sFNDhRAIcD1jr8Y5-6P0q8XpB8sV4U6b6vhWyrmuHszKCw/exec';
-        const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1aSTHt98K8zQ9MXUd8gprZ5raCnVXEVdRI1fjisE1yeE/edit';
+        // Configuration - Replace with actual URLs when deploying
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw8SHqhj-H7ooxZT5TXGzZfZPWvcgcCMkskdN2rQDLmRGI_qmqpw5YQx6PIx_rCt6cJxA/exec';
+        const GOOGLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1IqsqN8FwBb-uejbyUtkkCAXlJaikrQUWj_LgbVoseRM/edit?gid=474890857#gid=474890857';
 
         // Store and Employee Data
         const STORES = {
             'BackWerk Frankenthal': {
                 employees: ['Waqas', 'Yan', 'Gizem', 'Irfan', 'Najat', 'Atta', 'Ayesha', 'Melek'],
-                color: '#ff6b6b',
-                manager: 'Waqas'
+                color: '#ff6b6b'
             },
             'BackWerk Offenburg': {
                 employees: ['Shazia', 'Kamran', 'Hussain', 'Mohan', 'Nilab', 'Nandini'],
-                color: '#4ecdc4',
-                manager: 'Shazia'
+                color: '#4ecdc4'
             },
             'BackWerk Karlsruhe': {
                 employees: ['Furqan', 'Hamza', 'Dilpreet', 'Yaseen'],
-                color: '#45b7d1',
-                manager: 'Furqan'
+                color: '#45b7d1'
             },
             'Back-Factory Karlsruhe': {
                 employees: ['Nabeel', 'Lubna', 'Nosheen', 'Rabia'],
-                color: '#feca57',
-                manager: 'Nosheen'
+                color: '#feca57'
             }
         };
 
-        // Updated User Authentication Data
+        // User Authentication Data
         const USERS = {
-            // Business Owner (access to all stores)
+            // Management
+            'manager': { 
+                password: 'manager123', 
+                role: 'Manager', 
+                name: 'Store Manager',
+                stores: ['BackWerk Frankenthal', 'BackWerk Offenburg', 'BackWerk Karlsruhe', 'Back-Factory Karlsruhe']
+            },
+            'owner': { 
+                password: 'owner123', 
+                role: 'Owner', 
+                name: 'Business Owner',
+                stores: ['BackWerk Frankenthal', 'BackWerk Offenburg', 'BackWerk Karlsruhe', 'Back-Factory Karlsruhe']
+            },
+            // Business Owner
             'irfannazir': { 
                 password: 'irfan2025', 
                 role: 'Owner', 
                 name: 'Irfan Nazir', 
                 stores: ['BackWerk Frankenthal', 'BackWerk Offenburg', 'BackWerk Karlsruhe', 'Back-Factory Karlsruhe']
             },
-            
-            // Store Managers (access to their specific stores only)
+            // Store Managers
             'waqas': { 
                 password: 'waqas1991', 
                 role: 'Manager', 
                 name: 'Waqas', 
-                stores: ['BackWerk Frankenthal'],
-                managerOf: ['BackWerk Frankenthal']
+                stores: ['BackWerk Frankenthal'] // Can manage only Frankenthal store
             },
-            'shazia': { 
-                password: 'shazia2025', 
-                role: 'Manager', 
-                name: 'Shazia', 
-                stores: ['BackWerk Offenburg'],
-                managerOf: ['BackWerk Offenburg']
-            },
-            'furqan': { 
-                password: 'furqan2025', 
-                role: 'Manager', 
-                name: 'Furqan', 
-                stores: ['BackWerk Karlsruhe'],
-                managerOf: ['BackWerk Karlsruhe']
-            },
-            'nosheen': { 
-                password: 'nosheen2025', 
-                role: 'Manager', 
-                name: 'Nosheen', 
-                stores: ['Back-Factory Karlsruhe'],
-                managerOf: ['Back-Factory Karlsruhe']
-            },
-            
             // BackWerk Frankenthal Employees
             'yan': { password: 'emp123', role: 'Employee', name: 'Yan', stores: ['BackWerk Frankenthal'] },
             'gizem': { password: 'emp123', role: 'Employee', name: 'Gizem', stores: ['BackWerk Frankenthal'] },
@@ -878,22 +763,22 @@
             'atta': { password: 'emp123', role: 'Employee', name: 'Atta', stores: ['BackWerk Frankenthal'] },
             'ayesha': { password: 'emp123', role: 'Employee', name: 'Ayesha', stores: ['BackWerk Frankenthal'] },
             'melek': { password: 'emp123', role: 'Employee', name: 'Melek', stores: ['BackWerk Frankenthal'] },
-            
             // BackWerk Offenburg Employees
+            'shazia': { password: 'emp123', role: 'Employee', name: 'Shazia', stores: ['BackWerk Offenburg'] },
             'kamran': { password: 'emp123', role: 'Employee', name: 'Kamran', stores: ['BackWerk Offenburg'] },
             'hussain': { password: 'emp123', role: 'Employee', name: 'Hussain', stores: ['BackWerk Offenburg'] },
             'mohan': { password: 'emp123', role: 'Employee', name: 'Mohan', stores: ['BackWerk Offenburg'] },
             'nilab': { password: 'emp123', role: 'Employee', name: 'Nilab', stores: ['BackWerk Offenburg'] },
             'nandini': { password: 'emp123', role: 'Employee', name: 'Nandini', stores: ['BackWerk Offenburg'] },
-            
             // BackWerk Karlsruhe Employees
+            'furqan': { password: 'emp123', role: 'Employee', name: 'Furqan', stores: ['BackWerk Karlsruhe'] },
             'hamza': { password: 'emp123', role: 'Employee', name: 'Hamza', stores: ['BackWerk Karlsruhe'] },
             'dilpreet': { password: 'emp123', role: 'Employee', name: 'Dilpreet', stores: ['BackWerk Karlsruhe'] },
             'yaseen': { password: 'emp123', role: 'Employee', name: 'Yaseen', stores: ['BackWerk Karlsruhe'] },
-            
             // Back-Factory Karlsruhe Employees
             'nabeel': { password: 'emp123', role: 'Employee', name: 'Nabeel', stores: ['Back-Factory Karlsruhe'] },
             'lubna': { password: 'emp123', role: 'Employee', name: 'Lubna', stores: ['Back-Factory Karlsruhe'] },
+            'nosheen': { password: 'emp123', role: 'Employee', name: 'Nosheen', stores: ['Back-Factory Karlsruhe'] },
             'rabia': { password: 'emp123', role: 'Employee', name: 'Rabia', stores: ['Back-Factory Karlsruhe'] }
         };
 
@@ -911,194 +796,143 @@
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('dateInput').value = today;
             
-            // Load saved records from localStorage
-            loadLocalRecords();
+            // Load saved time records
+            loadTimeRecords();
             
-            // Check for saved login
-            checkSavedLogin();
+            // Add enter key support for login
+            document.getElementById('password').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    attemptLogin();
+                }
+            });
+            
+            // Store selection handler
+            document.getElementById('storeSelect').addEventListener('change', function() {
+                selectedStore = this.value;
+                updateStoreIndicator();
+                setupEmployeeDropdown();
+                updateRecordsList();
+                updateMonthlyTotal();
+            });
+
+            // Employee change handler
+            document.getElementById('employee').addEventListener('change', function() {
+                const selectedEmployee = this.value;
+                if (selectedEmployee && selectedStore) {
+                    updateRecordsList();
+                    updateMonthlyTotal();
+                    document.getElementById('submitBtn').disabled = false;
+                } else {
+                    document.getElementById('submitBtn').disabled = true;
+                }
+            });
         });
 
-        // Time update function
-        function updateCurrentTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('de-DE', { 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit' 
-            });
-            const dateString = now.toLocaleDateString('de-DE', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
-            
-            document.getElementById('currentTime').textContent = timeString;
-            document.getElementById('currentDate').textContent = dateString;
-        }
-
-        // Authentication functions
+        // LOGIN FUNCTIONS
         function attemptLogin() {
-            const username = document.getElementById('username').value.toLowerCase().trim();
+            const username = document.getElementById('username').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
-            const loginBtn = document.getElementById('loginBtn');
-            const statusMsg = document.getElementById('loginStatusMessage');
             
             if (!username || !password) {
-                showStatusMessage('loginStatusMessage', 'Please enter both username and password', 'error');
+                showLoginMessage('Please enter both username and password!', 'error');
                 return;
             }
+
+            const user = USERS[username];
+            if (!user || user.password !== password) {
+                showLoginMessage('Invalid username or password!', 'error');
+                return;
+            }
+
+            currentUser = user;
+            currentUser.username = username;
             
-            loginBtn.disabled = true;
-            loginBtn.textContent = 'Logging in...';
+            // Show success message and transition to app
+            showLoginMessage(`Welcome, ${user.name}!`, 'success');
             
-            // Simulate loading delay
             setTimeout(() => {
-                if (USERS[username] && USERS[username].password === password) {
-                    currentUser = USERS[username];
-                    currentUser.username = username;
-                    
-                    // Save login to localStorage
-                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-                    
-                    showLogin(false);
-                    setupUserInterface();
-                    showStatusMessage('loginStatusMessage', `Welcome ${currentUser.name}!`, 'success');
-                } else {
-                    showStatusMessage('loginStatusMessage', 'Invalid username or password', 'error');
-                }
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('appContainer').style.display = 'block';
+                document.getElementById('logoutBtn').style.display = 'block';
                 
-                loginBtn.disabled = false;
-                loginBtn.textContent = 'Login';
+                // Setup user-specific interface
+                setupUserInterface();
             }, 1000);
         }
 
-        function checkSavedLogin() {
-            const saved = localStorage.getItem('currentUser');
-            if (saved) {
-                currentUser = JSON.parse(saved);
-                showLogin(false);
-                setupUserInterface();
+        function showLoginMessage(message, type) {
+            const messageDiv = document.getElementById('loginStatusMessage');
+            messageDiv.textContent = message;
+            messageDiv.className = `status-message ${type}`;
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 2000);
             }
         }
 
         function logout() {
             currentUser = null;
             selectedStore = null;
-            localStorage.removeItem('currentUser');
-            showLogin(true);
-            resetInterface();
+            
+            // Reset form
             document.getElementById('username').value = '';
             document.getElementById('password').value = '';
-        }
-
-        function showLogin(show) {
-            document.getElementById('loginContainer').style.display = show ? 'block' : 'none';
-            document.getElementById('appContainer').style.display = show ? 'none' : 'block';
-            document.getElementById('logoutBtn').style.display = show ? 'none' : 'block';
-        }
-
-        function setupUserInterface() {
-            const isManagerOrOwner = currentUser.role === 'Manager' || currentUser.role === 'Owner';
-            const isEmployee = currentUser.role === 'Employee';
-
-            if (isEmployee) {
-                // EMPLOYEES: Show fixed store and name, hide all dropdowns
-                const userStore = currentUser.stores[0];
-                selectedStore = userStore;
-                
-                // Hide all manager/owner controls
-                document.getElementById('storeSelectContainer').style.display = 'none';
-                document.getElementById('employeeSelectContainer').style.display = 'none';
-                document.getElementById('adminControls').style.display = 'none';
-                document.getElementById('managerDashboard').style.display = 'none';
-                
-                // Show employee info section
-                document.getElementById('employeeInfoSection').style.display = 'block';
-                document.getElementById('employeeStoreDisplay').textContent = userStore;
-                document.getElementById('employeeNameDisplay').textContent = currentUser.name;
-                
-                // Update store indicator
-                document.getElementById('storeIndicator').textContent = userStore;
-                document.getElementById('storeIndicator').style.background = STORES[userStore].color;
-                
-                // Load employee records immediately
-                setTimeout(() => {
-                    loadRecordsForEmployee();
-                }, 100);
-                
-            } else if (isManagerOrOwner) {
-                // MANAGERS/OWNERS: Show all controls
-                document.getElementById('employeeInfoSection').style.display = 'none';
-                document.getElementById('storeSelectContainer').style.display = 'block';
-                document.getElementById('employeeSelectContainer').style.display = 'block';
-                document.getElementById('adminControls').style.display = 'block';
-                document.getElementById('managerDashboard').style.display = 'block';
-                
-                // Setup store dropdown
-                const storeSelect = document.getElementById('storeSelect');
-                while (storeSelect.children.length > 1) {
-                    storeSelect.removeChild(storeSelect.lastChild);
-                }
-                
-                currentUser.stores.forEach(store => {
-                    const option = document.createElement('option');
-                    option.value = store;
-                    option.textContent = store;
-                    storeSelect.appendChild(option);
-                });
-            }
-
-            validateForm();
-        }
-
-        function resetInterface() {
             document.getElementById('storeSelect').value = '';
             document.getElementById('employee').innerHTML = '<option value="">-- Select Store First --</option>';
-            document.getElementById('adminControls').style.display = 'none';
-            document.getElementById('managerDashboard').style.display = 'none';
-            document.getElementById('employeeInfoSection').style.display = 'none';
-            document.getElementById('adminMode').checked = false;
-            clearStatusMessage();
-            clearRecordsDisplay();
+            
+            // Hide status messages
+            document.getElementById('loginStatusMessage').style.display = 'none';
+            document.getElementById('statusMessage').style.display = 'none';
+            
+            // Switch back to login
+            document.getElementById('appContainer').style.display = 'none';
+            document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('logoutBtn').style.display = 'none';
+            
+            updateStoreIndicator();
         }
 
-        // Store and Employee Management
-        function onStoreChange() {
-            const store = document.getElementById('storeSelect').value;
-            const employeeSelect = document.getElementById('employee');
-            const storeIndicator = document.getElementById('storeIndicator');
+        // USER INTERFACE SETUP
+        function setupUserInterface() {
+            const storeSelect = document.getElementById('storeSelect');
+            const adminControls = document.getElementById('adminControls');
             
-            selectedStore = store;
+            // Clear existing options
+            storeSelect.innerHTML = '<option value="">-- Choose Store --</option>';
             
-            // Update store indicator
-            if (store) {
-                storeIndicator.textContent = store;
-                storeIndicator.style.background = STORES[store].color;
+            // Add stores based on user permissions
+            currentUser.stores.forEach(store => {
+                const option = document.createElement('option');
+                option.value = store;
+                option.textContent = store;
+                storeSelect.appendChild(option);
+            });
+            
+            // Show admin controls for managers/owners
+            if (currentUser.role === 'Manager' || currentUser.role === 'Owner') {
+                adminControls.style.display = 'block';
             } else {
-                storeIndicator.textContent = 'Select Store';
-                storeIndicator.style.background = 'rgba(255,255,255,0.2)';
+                adminControls.style.display = 'none';
+                // Auto-select employee's own name and store if they only have one
+                if (currentUser.stores.length === 1) {
+                    const userStore = currentUser.stores[0];
+                    storeSelect.value = userStore;
+                    selectedStore = userStore;
+                    updateStoreIndicator();
+                    setupEmployeeDropdown();
+                    
+                    // Auto-select the employee's own name
+                    const employeeSelect = document.getElementById('employee');
+                    setTimeout(() => {
+                        employeeSelect.value = currentUser.name;
+                        document.getElementById('submitBtn').disabled = false;
+                        updateRecordsList();
+                        updateMonthlyTotal();
+                    }, 100);
+                }
             }
-            
-            // Clear and populate employees
-            employeeSelect.innerHTML = '<option value="">-- Select Employee --</option>';
-            
-            if (store && STORES[store]) {
-                STORES[store].employees.forEach(emp => {
-                    const option = document.createElement('option');
-                    option.value = emp;
-                    option.textContent = emp;
-                    employeeSelect.appendChild(option);
-                });
-            }
-            
-            validateForm();
-            clearRecordsDisplay();
-        }
-
-        function onEmployeeChange() {
-            validateForm();
-            loadRecordsForEmployee();
         }
 
         function toggleAdminMode() {
@@ -1106,339 +940,342 @@
             const employeeSelect = document.getElementById('employee');
             
             if (adminMode) {
-                employeeSelect.disabled = false;
+                // Allow selection of any employee
+                setupEmployeeDropdown();
             } else {
-                if (currentUser.role === 'Manager') {
+                // Reset to user's own name if they're an employee
+                if (currentUser.role === 'Employee') {
                     employeeSelect.value = currentUser.name;
                 }
             }
-            
-            validateForm();
         }
 
-        // Form validation - SECURED for employees
-        function validateForm() {
-            let store, employee, date, startTime, endTime;
-            
-            if (currentUser.role === 'Employee') {
-                // EMPLOYEES: Always use their fixed store and name - NO EXCEPTIONS
-                store = currentUser.stores[0];
-                employee = currentUser.name;
+        // STORE AND EMPLOYEE MANAGEMENT
+        function updateStoreIndicator() {
+            const indicator = document.getElementById('storeIndicator');
+            if (selectedStore) {
+                indicator.textContent = selectedStore;
+                const storeColor = STORES[selectedStore]?.color || '#ff6b6b';
+                indicator.style.background = storeColor;
             } else {
-                // MANAGERS/OWNERS: Use dropdown values
-                store = document.getElementById('storeSelect').value;
-                employee = document.getElementById('employee').value;
+                indicator.textContent = 'Select Store';
+                indicator.style.background = 'rgba(255,255,255,0.2)';
+            }
+        }
+
+        function setupEmployeeDropdown() {
+            const employeeSelect = document.getElementById('employee');
+            employeeSelect.innerHTML = '<option value="">-- Select Employee --</option>';
+            
+            if (!selectedStore || !STORES[selectedStore]) {
+                return;
             }
             
-            date = document.getElementById('dateInput').value;
-            startTime = document.getElementById('startTime').value;
-            endTime = document.getElementById('endTime').value;
+            const employees = STORES[selectedStore].employees;
+            const adminMode = document.getElementById('adminMode')?.checked || false;
             
-            const submitBtn = document.getElementById('submitBtn');
-            const isValid = store && employee && date && startTime && endTime;
-            submitBtn.disabled = !isValid;
+            employees.forEach(employee => {
+                // Show all employees if admin mode, or only current user if employee
+                if (adminMode || currentUser.role === 'Manager' || currentUser.role === 'Owner' || 
+                    (currentUser.role === 'Employee' && employee === currentUser.name)) {
+                    const option = document.createElement('option');
+                    option.value = employee;
+                    option.textContent = employee;
+                    employeeSelect.appendChild(option);
+                }
+            });
         }
 
-        // Time setting functions
+        // TIME MANAGEMENT
+        function updateCurrentTime() {
+            const now = new Date();
+            
+            // Update time display
+            const timeString = now.toLocaleTimeString('de-DE', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+            
+            // Update date display
+            const dateString = now.toLocaleDateString('de-DE', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            document.getElementById('currentDate').textContent = dateString;
+        }
+
         function setCurrentTime(inputId) {
             const now = new Date();
             const timeString = now.toTimeString().slice(0, 5);
             document.getElementById(inputId).value = timeString;
-            validateForm();
         }
 
-        // SECURED submission function
+        // TIME ENTRY SUBMISSION
         async function submitTimeEntry() {
-            const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.textContent;
+            const employee = document.getElementById('employee').value;
+            const date = document.getElementById('dateInput').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
             
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Submitting...';
+            // Validation
+            if (!employee || !selectedStore || !date || !startTime || !endTime) {
+                showMessage('Please fill in all fields!', 'error');
+                return;
+            }
             
-            try {
-                let formData;
-                
-                if (currentUser.role === 'Employee') {
-                    // EMPLOYEES: FORCE their own store and name - CANNOT be overridden
-                    formData = {
-                        store: currentUser.stores[0], // FIXED - employee's assigned store
-                        employee: currentUser.name,   // FIXED - employee's own name
-                        date: document.getElementById('dateInput').value,
-                        startTime: document.getElementById('startTime').value,
-                        endTime: document.getElementById('endTime').value,
-                        submittedBy: currentUser.name,
-                        submittedAt: new Date().toISOString()
-                    };
-                } else {
-                    // MANAGERS/OWNERS: Can use dropdown values
-                    formData = {
-                        store: document.getElementById('storeSelect').value,
-                        employee: document.getElementById('employee').value,
-                        date: document.getElementById('dateInput').value,
-                        startTime: document.getElementById('startTime').value,
-                        endTime: document.getElementById('endTime').value,
-                        submittedBy: currentUser.name,
-                        submittedAt: new Date().toISOString()
-                    };
-                }
-                
-                // Validate times
-                if (!validateTimeEntry(formData)) {
+            if (startTime >= endTime) {
+                showMessage('End time must be after start time!', 'error');
+                return;
+            }
+            
+            // Calculate hours worked
+            const start = new Date(`${date}T${startTime}`);
+            const end = new Date(`${date}T${endTime}`);
+            const hoursWorked = (end - start) / (1000 * 60 * 60);
+            
+            if (hoursWorked > 12) {
+                if (!confirm('Work period is over 12 hours. Are you sure this is correct?')) {
                     return;
                 }
-                
-                // Calculate hours
-                const hours = calculateHours(formData.startTime, formData.endTime);
-                formData.totalHours = hours;
-                
+            }
+            
+            const timeEntry = {
+                id: Date.now().toString(),
+                employee: employee,
+                store: selectedStore,
+                date: date,
+                startTime: startTime,
+                endTime: endTime,
+                hoursWorked: hoursWorked.toFixed(2),
+                submittedBy: currentUser.name,
+                submittedAt: new Date().toISOString(),
+                timestamp: new Date().toLocaleString('de-DE')
+            };
+            
+            // Disable submit button
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('submitBtn').textContent = 'Submitting...';
+            
+            try {
                 // Save locally first
-                saveLocalRecord(formData);
+                saveTimeEntryLocally(timeEntry);
                 
-                // Try to submit to Google Sheets
-                await submitToGoogleSheets(formData);
-                
-                showStatusMessage('statusMessage', 
-                    `Successfully submitted ${hours.toFixed(2)} hours for ${formData.employee}`, 
-                    'success');
+                // Try to submit to Google Sheets if URL is configured
+                if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.includes('script.google.com')) {
+                    await submitToGoogleSheets(timeEntry);
+                    showMessage(`✅ Time entry submitted successfully!\n${employee}: ${hoursWorked.toFixed(1)} hours`, 'success');
+                } else {
+                    showMessage(`✅ Time entry saved locally!\n${employee}: ${hoursWorked.toFixed(1)} hours\n(Google Sheets not configured)`, 'info');
+                }
                 
                 // Clear form
-                clearForm();
+                document.getElementById('startTime').value = '';
+                document.getElementById('endTime').value = '';
                 
-                // Refresh records
-                loadRecordsForEmployee();
+                // Update displays
+                updateRecordsList();
+                updateMonthlyTotal();
                 
             } catch (error) {
                 console.error('Submission error:', error);
-                showStatusMessage('statusMessage', 
-                    'Saved locally. Will sync when online.', 
-                    'warning');
+                showMessage('✅ Entry saved locally! (Online sync failed)', 'info');
             } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
+                // Re-enable submit button
+                document.getElementById('submitBtn').disabled = false;
+                document.getElementById('submitBtn').textContent = 'Submit Work Hours';
             }
         }
 
-        function validateTimeEntry(data) {
-            const startTime = new Date(`2000-01-01T${data.startTime}`);
-            const endTime = new Date(`2000-01-01T${data.endTime}`);
-            
-            if (endTime <= startTime) {
-                showStatusMessage('statusMessage', 'End time must be after start time', 'error');
-                return false;
-            }
-            
-            const hours = (endTime - startTime) / (1000 * 60 * 60);
-            if (hours > 24) {
-                showStatusMessage('statusMessage', 'Work hours cannot exceed 24 hours', 'error');
-                return false;
-            }
-            
-            return true;
+        function saveTimeEntryLocally(timeEntry) {
+            timeRecords.push(timeEntry);
+            saveTimeRecords();
         }
 
-        function calculateHours(startTime, endTime) {
-            const start = new Date(`2000-01-01T${startTime}`);
-            const end = new Date(`2000-01-01T${endTime}`);
-            return (end - start) / (1000 * 60 * 60);
-        }
-
-        async function submitToGoogleSheets(data) {
+        async function submitToGoogleSheets(timeEntry) {
             const response = await fetch(GOOGLE_SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    action: 'addTimeEntry',
+                    data: timeEntry
+                }),
+                mode: 'no-cors'
             });
             
+            // Note: no-cors mode doesn't allow reading the response
+            // We assume success if no error is thrown
             return true;
         }
 
-        // Local storage functions
-        function saveLocalRecord(record) {
-            const records = JSON.parse(localStorage.getItem('timeRecords') || '[]');
-            record.id = Date.now().toString();
-            records.push(record);
-            localStorage.setItem('timeRecords', JSON.stringify(records));
-            timeRecords = records;
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('statusMessage');
+            messageDiv.innerHTML = message.replace(/\n/g, '<br>');
+            messageDiv.className = `status-message ${type}`;
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
         }
 
-        function loadLocalRecords() {
-            timeRecords = JSON.parse(localStorage.getItem('timeRecords') || '[]');
+        // DATA MANAGEMENT
+        function saveTimeRecords() {
+            const data = {
+                records: timeRecords,
+                lastSaved: new Date().toISOString()
+            };
+            // In a real app, this would save to localStorage or a database
+            // For demo purposes, we keep it in memory
+            console.log('Time records saved:', data);
         }
 
-        function clearLocalRecords() {
-            if (confirm('Are you sure you want to clear all local records?')) {
-                localStorage.removeItem('timeRecords');
-                timeRecords = [];
-                clearRecordsDisplay();
-                showStatusMessage('statusMessage', 'Local records cleared', 'info');
-            }
+        function loadTimeRecords() {
+            // In a real app, this would load from localStorage or a database
+            // For demo purposes, we start with empty array
+            timeRecords = [];
         }
 
-        // SECURED Records display - employees only see their own
-        function loadRecordsForEmployee() {
-            let store, employee;
-            
-            if (currentUser.role === 'Employee') {
-                // EMPLOYEES: Always use their own data
-                store = currentUser.stores[0];
-                employee = currentUser.name;
-            } else {
-                // MANAGERS/OWNERS: Use dropdown values
-                store = document.getElementById('storeSelect').value;
-                employee = document.getElementById('employee').value;
-            }
-            
-            if (!store || !employee) {
-                clearRecordsDisplay();
-                return;
-            }
-            
-            const employeeRecords = timeRecords.filter(record => 
-                record.store === store && record.employee === employee
-            ).sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            displayRecords(employeeRecords);
-            calculateMonthlyTotal(employeeRecords);
-        }
-
-        function displayRecords(records) {
+        // RECORDS DISPLAY
+        function updateRecordsList() {
             const recordsList = document.getElementById('recordsList');
+            const selectedEmployee = document.getElementById('employee').value;
             
-            if (records.length === 0) {
-                const message = currentUser.role === 'Employee' ? 
-                    'No records found yet' : 
-                    'No records found for this employee';
-                recordsList.innerHTML = `<div class="no-records">${message}</div>`;
+            if (!selectedEmployee || !selectedStore) {
+                recordsList.innerHTML = '<div class="no-records">Select store and employee to view records</div>';
                 return;
             }
             
-            recordsList.innerHTML = records.slice(0, 10).map(record => {
-                const date = new Date(record.date).toLocaleDateString('de-DE');
-                const hours = record.totalHours?.toFixed(2) || calculateHours(record.startTime, record.endTime).toFixed(2);
+            // Filter records for selected employee and store
+            const employeeRecords = timeRecords.filter(record => 
+                record.employee === selectedEmployee && record.store === selectedStore
+            );
+            
+            if (employeeRecords.length === 0) {
+                recordsList.innerHTML = '<div class="no-records">No time records found for this employee</div>';
+                return;
+            }
+            
+            // Sort by date (newest first)
+            employeeRecords.sort((a, b) => new Date(b.date) - new Date(a.date));
+            
+            // Display records
+            recordsList.innerHTML = employeeRecords.map(record => {
+                const date = new Date(record.date).toLocaleDateString('de-DE', {
+                    weekday: 'short',
+                    day: '2-digit',
+                    month: '2-digit'
+                });
                 
                 return `
                     <div class="record-item">
-                        <div class="record-info">
+                        <div>
                             <div class="record-date">${date}</div>
                             <div class="record-times">
-                                ${record.startTime} → ${record.endTime}
+                                🕐 ${record.startTime} - ${record.endTime}
                             </div>
                         </div>
-                        <div class="record-hours">${hours}h</div>
+                        <div class="record-hours">${record.hoursWorked}h</div>
                     </div>
                 `;
             }).join('');
         }
 
-        function calculateMonthlyTotal(records) {
+        function updateMonthlyTotal() {
+            const selectedEmployee = document.getElementById('employee').value;
+            const monthlyTotal = document.getElementById('monthlyTotal');
+            
+            if (!selectedEmployee || !selectedStore) {
+                monthlyTotal.style.display = 'none';
+                return;
+            }
+            
+            // Calculate this month's total
             const currentMonth = new Date().getMonth();
             const currentYear = new Date().getFullYear();
             
-            const monthlyRecords = records.filter(record => {
+            const monthlyRecords = timeRecords.filter(record => {
                 const recordDate = new Date(record.date);
-                return recordDate.getMonth() === currentMonth && recordDate.getFullYear() === currentYear;
+                return record.employee === selectedEmployee && 
+                       record.store === selectedStore &&
+                       recordDate.getMonth() === currentMonth &&
+                       recordDate.getFullYear() === currentYear;
             });
             
-            const totalHours = monthlyRecords.reduce((sum, record) => {
-                return sum + (record.totalHours || calculateHours(record.startTime, record.endTime));
-            }, 0);
-            
-            const monthlyTotalDiv = document.getElementById('monthlyTotal');
-            const totalHoursDiv = document.getElementById('totalHours');
+            const totalHours = monthlyRecords.reduce((sum, record) => sum + parseFloat(record.hoursWorked), 0);
             
             if (totalHours > 0) {
-                monthlyTotalDiv.style.display = 'block';
-                totalHoursDiv.textContent = `${totalHours.toFixed(1)} hours`;
+                document.getElementById('totalHours').textContent = `${totalHours.toFixed(1)} hours`;
+                monthlyTotal.style.display = 'block';
             } else {
-                monthlyTotalDiv.style.display = 'none';
+                monthlyTotal.style.display = 'none';
             }
-        }
-
-        function clearRecordsDisplay() {
-            const message = currentUser && currentUser.role === 'Employee' ? 
-                'No records found yet' : 
-                'Select store and employee to view records';
-            
-            document.getElementById('recordsList').innerHTML = 
-                `<div class="no-records">${message}</div>`;
-            document.getElementById('monthlyTotal').style.display = 'none';
         }
 
         function refreshRecords() {
-            loadRecordsForEmployee();
-            showStatusMessage('statusMessage', 'Records refreshed', 'info');
-            setTimeout(() => clearStatusMessage(), 2000);
+            updateRecordsList();
+            updateMonthlyTotal();
+            showMessage('Records refreshed!', 'info');
         }
 
-        // Utility functions
-        function clearForm() {
-            document.getElementById('startTime').value = '';
-            document.getElementById('endTime').value = '';
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('dateInput').value = today;
-            validateForm();
+        function clearLocalRecords() {
+            if (confirm('Are you sure you want to clear all local time records? This cannot be undone.')) {
+                timeRecords = [];
+                updateRecordsList();
+                updateMonthlyTotal();
+                showMessage('Local records cleared!', 'info');
+            }
         }
 
-        function showStatusMessage(elementId, message, type) {
-            const statusDiv = document.getElementById(elementId);
-            statusDiv.textContent = message;
-            statusDiv.className = `status-message ${type}`;
-            statusDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                statusDiv.style.display = 'none';
-            }, 5000);
-        }
-
-        function clearStatusMessage() {
-            const statusElements = ['statusMessage', 'loginStatusMessage'];
-            statusElements.forEach(id => {
-                const element = document.getElementById(id);
-                if (element) {
-                    element.style.display = 'none';
-                }
-            });
-        }
-
-        // Manager dashboard functions
+        // DASHBOARD FUNCTIONS
         function openMasterSheet() {
-            window.open(GOOGLE_SHEET_URL, '_blank');
+            if (GOOGLE_SHEET_URL && GOOGLE_SHEET_URL.includes('docs.google.com')) {
+                window.open(GOOGLE_SHEET_URL, '_blank');
+            } else {
+                showMessage('Google Sheets dashboard not configured!', 'error');
+            }
         }
 
         function downloadStoreReport() {
-            const store = selectedStore || (currentUser.role === 'Employee' ? currentUser.stores[0] : document.getElementById('storeSelect').value);
-            
-            if (!store) {
-                alert('Please select a store first');
+            if (!selectedStore) {
+                showMessage('Please select a store first!', 'error');
                 return;
             }
             
-            const storeRecords = timeRecords.filter(record => record.store === store);
+            // Filter records for selected store
+            const storeRecords = timeRecords.filter(record => record.store === selectedStore);
+            
             if (storeRecords.length === 0) {
-                alert('No records found for this store');
+                showMessage('No records found for this store!', 'error');
                 return;
             }
             
-            const csvContent = generateCSVReport(storeRecords, store);
+            // Generate CSV content
+            const csvContent = generateStoreReportCSV(storeRecords);
             
+            // Download CSV file
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a');
-            if (link.download !== undefined) {
-                const url = URL.createObjectURL(blob);
-                link.setAttribute('href', url);
-                link.setAttribute('download', `${store}_Report_${new Date().toISOString().split('T')[0]}.csv`);
-                link.style.visibility = 'hidden';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            }
+            const url = URL.createObjectURL(blob);
+            
+            link.setAttribute('href', url);
+            link.setAttribute('download', `${selectedStore}_TimeReport_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showMessage(`Store report downloaded for ${selectedStore}!`, 'success');
         }
 
-        function generateCSVReport(records, store) {
-            const headers = ['Date', 'Employee', 'Start Time', 'End Time', 'Total Hours', 'Submitted By', 'Submitted At'];
+        function generateStoreReportCSV(records) {
+            const headers = ['Date', 'Employee', 'Start Time', 'End Time', 'Hours Worked', 'Submitted By', 'Submitted At'];
             
             const csvRows = [
                 headers.join(','),
@@ -1447,45 +1284,51 @@
                     record.employee,
                     record.startTime,
                     record.endTime,
-                    (record.totalHours || calculateHours(record.startTime, record.endTime)).toFixed(2),
-                    record.submittedBy || 'Unknown',
-                    record.submittedAt ? new Date(record.submittedAt).toLocaleString() : 'Unknown'
+                    record.hoursWorked,
+                    record.submittedBy,
+                    record.timestamp
                 ].join(','))
             ];
             
             return csvRows.join('\n');
         }
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && !document.getElementById('submitBtn').disabled) {
-                if (document.getElementById('appContainer').style.display !== 'none') {
-                    submitTimeEntry();
-                } else if (document.getElementById('loginContainer').style.display !== 'none') {
-                    attemptLogin();
+        // ADD SOME DEMO DATA FOR TESTING
+        function addDemoData() {
+            const demoEntries = [
+                {
+                    id: '1',
+                    employee: 'Waqas',
+                    store: 'BackWerk Frankenthal',
+                    date: '2025-09-01',
+                    startTime: '08:00',
+                    endTime: '16:00',
+                    hoursWorked: '8.0',
+                    submittedBy: 'Waqas',
+                    submittedAt: new Date().toISOString(),
+                    timestamp: new Date().toLocaleString('de-DE')
+                },
+                {
+                    id: '2',
+                    employee: 'Yan',
+                    store: 'BackWerk Frankenthal',
+                    date: '2025-09-01',
+                    startTime: '09:00',
+                    endTime: '17:00',
+                    hoursWorked: '8.0',
+                    submittedBy: 'Store Manager',
+                    submittedAt: new Date().toISOString(),
+                    timestamp: new Date().toLocaleString('de-DE')
                 }
-            }
-        });
-
-        // Error handling for offline scenarios
-        window.addEventListener('online', function() {
-            showNotification('Back online! Records will sync automatically.', 'success');
-        });
-
-        window.addEventListener('offline', function() {
-            showNotification('You are offline. Records will be saved locally.', 'warning');
-        });
-
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
+            ];
             
-            setTimeout(() => {
-                notification.remove();
-            }, 4000);
+            timeRecords.push(...demoEntries);
+            updateRecordsList();
+            updateMonthlyTotal();
         }
+
+        // Add demo data after page load (for testing)
+        setTimeout(addDemoData, 2000);
     </script>
 </body>
 </html>
