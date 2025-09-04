@@ -607,11 +607,10 @@
                 <div class="status-message" id="loginStatusMessage"></div>
                 
                 <div style="text-align: center; margin-top: 20px; color: #666; font-size: 14px;">
-    Contact management for login credentials<br>
-    <div style="margin-top: 15px; padding: 10px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px; font-weight: 600; font-size: 12px; letter-spacing: 1px;">
-        POWERED BY WAQAS
-    </div>
-</div>
+                    Contact management for login credentials<br>
+                    <small>Demo: manager/manager123 or owner/owner123</small>
+                </div>
+            </div>
 
             <div class="app-container" id="appContainer">
                 <div class="store-select">
@@ -672,13 +671,14 @@
                 <div class="status-message" id="statusMessage"></div>
 
                 <div class="dashboard-section">
-    <div class="dashboard-header">
-        <h3>🚀 Quick Actions</h3>
-        <div id="dashboardButtons">
-            <button class="btn-small dashboard" onclick="downloadStoreReport()">Store Report</button>
-        </div>
-    </div>
-</div>
+                    <div class="dashboard-header">
+                        <h3>🚀 Quick Actions</h3>
+                        <div>
+                            <button class="btn-small dashboard" onclick="openMasterSheet()">Master Dashboard</button>
+                            <button class="btn-small dashboard" onclick="downloadStoreReport()">Store Report</button>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="records-section">
                     <div class="records-header">
@@ -764,21 +764,21 @@
             'ayesha': { password: 'emp123', role: 'Employee', name: 'Ayesha', stores: ['BackWerk Frankenthal'] },
             'melek': { password: 'emp123', role: 'Employee', name: 'Melek', stores: ['BackWerk Frankenthal'] },
             // BackWerk Offenburg Employees
-            'shazia': { password: 'emp123', role: 'Manager', name: 'Shazia', stores: ['BackWerk Offenburg'] },
+            'shazia': { password: 'emp123', role: 'Employee', name: 'Shazia', stores: ['BackWerk Offenburg'] },
             'kamran': { password: 'emp123', role: 'Employee', name: 'Kamran', stores: ['BackWerk Offenburg'] },
             'hussain': { password: 'emp123', role: 'Employee', name: 'Hussain', stores: ['BackWerk Offenburg'] },
             'mohan': { password: 'emp123', role: 'Employee', name: 'Mohan', stores: ['BackWerk Offenburg'] },
             'nilab': { password: 'emp123', role: 'Employee', name: 'Nilab', stores: ['BackWerk Offenburg'] },
             'nandini': { password: 'emp123', role: 'Employee', name: 'Nandini', stores: ['BackWerk Offenburg'] },
             // BackWerk Karlsruhe Employees
-            'furqan': { password: 'emp123', role: 'Manager', name: 'Furqan', stores: ['BackWerk Karlsruhe'] },
+            'furqan': { password: 'emp123', role: 'Employee', name: 'Furqan', stores: ['BackWerk Karlsruhe'] },
             'hamza': { password: 'emp123', role: 'Employee', name: 'Hamza', stores: ['BackWerk Karlsruhe'] },
             'dilpreet': { password: 'emp123', role: 'Employee', name: 'Dilpreet', stores: ['BackWerk Karlsruhe'] },
             'yaseen': { password: 'emp123', role: 'Employee', name: 'Yaseen', stores: ['BackWerk Karlsruhe'] },
             // Back-Factory Karlsruhe Employees
             'nabeel': { password: 'emp123', role: 'Employee', name: 'Nabeel', stores: ['Back-Factory Karlsruhe'] },
             'lubna': { password: 'emp123', role: 'Employee', name: 'Lubna', stores: ['Back-Factory Karlsruhe'] },
-            'nosheen': { password: 'emp123', role: 'Manager', name: 'Nosheen', stores: ['Back-Factory Karlsruhe'] },
+            'nosheen': { password: 'emp123', role: 'Employee', name: 'Nosheen', stores: ['Back-Factory Karlsruhe'] },
             'rabia': { password: 'emp123', role: 'Employee', name: 'Rabia', stores: ['Back-Factory Karlsruhe'] }
         };
 
