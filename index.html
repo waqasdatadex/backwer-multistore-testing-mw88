@@ -855,7 +855,7 @@
         });
 
         // LOGIN FUNCTIONS
-        async function attemptLogin() {
+async function attemptLogin() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value;
     
@@ -883,34 +883,34 @@
             body: formData,
             signal: controller.signal
         });
-                
-                const result = await response.json();
-                
-                if (result.status === 'success') {
-                    // Store authentication token
-                    authToken = result.token;
-                    localStorage.setItem('backwerkAuthToken', authToken);
-                    
-                    // Store user info
-                    currentUser = result.userInfo;
-                    isAdmin = ['Admin', 'Owner', 'Manager'].includes(currentUser.role);
-                    availableEmployees = result.allEmployees || [currentUser.name];
-                    
-                    // Show main app
-                    showMainApp();
-                    showMessage(`Welcome ${currentUser.name}! (${currentUser.role})`, 'success');
-                    
-                } else {
-                    throw new Error(result.message || 'Login failed');
-                }
-                
-            } catch (error) {
-                console.error('Login error:', error);
-                showLoginMessage(`Login failed: ${error.message}`, 'error');
-            } finally {
-                loginBtn.disabled = false;
-                loginBtn.textContent = 'Login';
-            }
+        
+        const result = await response.json();
+        
+        if (result.status === 'success') {
+            // Store authentication token
+            authToken = result.token;
+            localStorage.setItem('backwerkAuthToken', authToken);
+            
+            // Store user info
+            currentUser = result.userInfo;
+            isAdmin = ['Admin', 'Owner', 'Manager'].includes(currentUser.role);
+            availableEmployees = result.allEmployees || [currentUser.name];
+            
+            // Show main app
+            showMainApp();
+            showMessage(`Welcome ${currentUser.name}! (${currentUser.role})`, 'success');
+            
+        } else {
+            throw new Error(result.message || 'Login failed');
+        }
+        
+    } catch (error) {
+        console.error('Login error:', error);
+        showLoginMessage(`Login failed: ${error.message}`, 'error');
+    } finally {
+        loginBtn.disabled = false;
+        loginBtn.textContent = 'Login';
+    }
 }
 
         async function validateExistingLogin() {
