@@ -11,6 +11,36 @@
             box-sizing: border-box;
         }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ADD THIS CODE HERE - Performance optimizations */
+        * {
+            will-change: auto;
+        }
+
+        .form-input:focus,
+        .time-input:focus {
+            transform: none !important;
+            box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2) !important;
+        }
+
+        .submit-btn:hover,
+        .login-btn:hover {
+            transform: none !important;
+            box-shadow: none !important;
+        }
+        /* END OF ADDED CODE */
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #222831 100%);
+            min-height: 100vh;
+            padding: 15px;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #222831 100%);
@@ -18,6 +48,22 @@
             padding: 15px;
         }
 
+        /* Optimize performance */
+* {
+    will-change: auto;
+}
+
+.form-input:focus,
+.time-input:focus {
+    transform: none !important;
+    box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2) !important;
+}
+
+.submit-btn:hover,
+.login-btn:hover {
+    transform: none !important;
+    box-shadow: none !important;
+}
         .container {
             max-width: 450px;
             margin: 0 auto;
@@ -96,6 +142,33 @@
             padding: 30px 25px;
         }
 
+        .content {
+            padding: 30px 25px;
+        }
+
+        /* ADD THIS CSS HERE */
+        .connection-status {
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .connection-status.online {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .connection-status.offline {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        /* END ADDITION */
+
+        /* LOGIN STYLES */
+        .login-container {
         /* LOGIN STYLES */
         .login-container {
             display: block;
@@ -583,6 +656,13 @@
         </div>
         
         <div class="content">
+            <div class="content">
+            <!-- ADD THIS LINE -->
+            <div class="connection-status" id="connectionStatus" style="display: none;">Connection Status</div>
+            <!-- END ADDITION -->
+            
+            <!-- LOGIN SCREEN -->
+            <div class="login-container" id="loginContainer">
             <!-- LOGIN SCREEN -->
             <div class="login-container" id="loginContainer">
                 <div class="login-form">
@@ -776,28 +856,33 @@
 
         // LOGIN FUNCTIONS
         async function attemptLogin() {
-            const username = document.getElementById('username').value.trim();
-            const password = document.getElementById('password').value;
-            
-            if (!username || !password) {
-                showLoginMessage('Please enter both username and password!', 'error');
-                return;
-            }
-            
-            const loginBtn = document.getElementById('loginBtn');
-            loginBtn.disabled = true;
-            loginBtn.textContent = 'Logging in...';
-            
-            try {
-                const formData = new FormData();
-                formData.append('action', 'login');
-                formData.append('username', username);
-                formData.append('password', password);
-                
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData
-                });
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    
+    if (!username || !password) {
+        showLoginMessage('Please enter both username and password!', 'error');
+        return;
+    }
+    
+    const loginBtn = document.getElementById('loginBtn');
+    loginBtn.disabled = true;
+    loginBtn.textContent = 'Logging in...';
+    
+    try {
+        const formData = new FormData();
+        formData.append('action', 'login');
+        formData.append('username', username);
+        formData.append('password', password);
+        
+        // Add timeout and retry
+        const controller = new AbortController();
+        setTimeout(() => controller.abort(), 15000);
+        
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            body: formData,
+            signal: controller.signal
+        });
                 
                 const result = await response.json();
                 
@@ -1078,10 +1163,15 @@
             formData.append('isAdminOverride', adminMode.toString());
 
             try {
-                const response = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: formData
-                });
+    // Add timeout
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 20000);
+    
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        body: formData,
+        signal: controller.signal
+    });
 
                 const result = await response.json();
                 
@@ -1293,6 +1383,48 @@
                 showMessage('Local records cleared successfully!', 'success');
             }
         }
+        }
+
+        // ADD THESE FUNCTIONS HERE
+        async function checkConnection() {
+            const statusEl = document.getElementById('connectionStatus');
+            try {
+                const controller = new AbortController();
+                setTimeout(() => controller.abort(), 3000);
+                
+                await fetch(GOOGLE_SCRIPT_URL + '?ping', {
+                    method: 'GET',
+                    signal: controller.signal
+                });
+                
+                statusEl.className = 'connection-status online';
+                statusEl.textContent = 'Connected';
+                statusEl.style.display = 'block';
+                
+                setTimeout(() => statusEl.style.display = 'none', 3000);
+            } catch {
+                statusEl.className = 'connection-status offline';
+                statusEl.textContent = 'Connection slow/offline';
+                statusEl.style.display = 'block';
+            }
+        }
+
+        // Update the existing DOMContentLoaded listener
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 1000);
+            
+            // ADD THIS LINE to existing code
+            checkConnection();
+            
+            // Check if user is already logged in
+            if (authToken) {
+                validateExistingLogin();
+            }
+            // ... rest of existing code stays the same
+        });
+        // END ADDITION
+    </script>
     </script>
 </body>
 </html>
